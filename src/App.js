@@ -1,20 +1,35 @@
-import { Add } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  createTheme,
+  Stack,
+  ThemeProvider,
+} from '@mui/material';
+import { useState } from 'react';
+import { Feed, Sidebar, Rightbar, Navbar, Add } from './components';
 
 function App() {
+  const [mode, setMode] = useState('light');
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
   return (
-    <div>
-      <Button variant="text">Text</Button>
-      <Button
-        startIcon={<Add />}
-        variant="contained"
-        color="secondary"
-        size="small"
-      >
-        Contained
-      </Button>
-      <Button variant="outlined">Out</Button>
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <Box backgroundColor={'background.default'} color={'text.primary'}>
+        <Navbar />
+        <Stack direction="row" spacing={2} justifyContent="space-between">
+          <Sidebar setMode={setMode} mode={mode} />
+          <Feed />
+          <Rightbar />
+        </Stack>
+        <Add />
+      </Box>
+    </ThemeProvider>
   );
 }
 
